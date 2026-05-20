@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'cesizen-pwa-v1';
+const CACHE_VERSION = 'cesizen-pwa-v2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const STATIC_ASSETS = [
@@ -6,7 +6,7 @@ const STATIC_ASSETS = [
     '/offline.html',
     '/manifest.webmanifest',
     '/favicon.ico',
-    '/assets/css/app.css',
+    '/assets/css/app.css?v=2',
     '/assets/icons/icon.svg',
 ];
 

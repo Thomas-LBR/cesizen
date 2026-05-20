@@ -37,6 +37,7 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
 
     $routes->get('diagnostic', 'Admin\DiagnosticEvents::index');
     $routes->match(['get', 'post'], 'diagnostic/creer', 'Admin\DiagnosticEvents::create');
+    $routes->match(['get', 'post'], 'diagnostic/resultats', 'Admin\DiagnosticResultConfigs::index');
     $routes->match(['get', 'post'], 'diagnostic/(:num)/modifier', 'Admin\DiagnosticEvents::edit/$1');
     $routes->post('diagnostic/(:num)/statut', 'Admin\DiagnosticEvents::status/$1');
 });

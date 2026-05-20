@@ -11,7 +11,7 @@
     <link rel="manifest" href="<?= base_url('manifest.webmanifest') ?>">
     <link rel="icon" href="<?= base_url('favicon.ico') ?>">
     <link rel="apple-touch-icon" href="<?= base_url('assets/icons/icon.svg') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/app.css?v=2') ?>">
 </head>
 <body>
 <header class="site-header">
@@ -29,7 +29,7 @@
                 <a href="<?= site_url('deconnexion') ?>">Déconnexion</a>
             <?php else: ?>
                 <a href="<?= site_url('connexion') ?>">Connexion</a>
-                <a class="btn" href="<?= site_url('inscription') ?>">Créer un compte</a>
+                <a class="btn register-link" href="<?= site_url('inscription') ?>">Créer un compte</a>
             <?php endif; ?>
         </div>
     </nav>
