@@ -16,6 +16,5 @@
         <button class="btn" type="submit">Se connecter</button>
         <a href="<?= site_url('mot-de-passe-oublie') ?>">Mot de passe oublié</a>
     </div>
-    <p class="muted">Démo : admin@cesizen.test / Admin123! ou user@cesizen.test / User123!</p>
 </form>
 <?= $this->endSection() ?>

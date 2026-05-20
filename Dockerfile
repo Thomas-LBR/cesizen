@@ -21,6 +21,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 COPY . .
+COPY docker/app.env .env
 COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN mkdir -p writable/cache writable/logs writable/session writable/uploads writable/debugbar writable/database \
