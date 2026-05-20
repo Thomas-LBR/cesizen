@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">CESIZen</title>
+  <desc id="desc">Icone de l'application CESIZen</desc>
+  <rect width="512" height="512" rx="112" fill="#1f7a68"/>
+  <circle cx="256" cy="256" r="150" fill="#f5f8f7"/>
+  <path d="M164 271c30-96 121-137 198-100-15 6-29 15-41 27 34 1 63 17 83 43-45-13-86-5-123 25-38 31-80 40-117 5Z" fill="#1f7a68"/>
+  <path d="M160 330c67 34 151 22 205-32" fill="none" stroke="#f2b84b" stroke-width="28" stroke-linecap="round"/>
+  <text x="256" y="410" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#f5f8f7">Zen</text>
+</svg>

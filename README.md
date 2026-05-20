@@ -20,6 +20,7 @@ Le projet propose aussi une interface d'administration pour gérer les utilisate
 - [Commandes utiles](#commandes-utiles)
 - [Structure du projet](#structure-du-projet)
 - [Base de données](#base-de-données)
+- [PWA](#pwa)
 - [Routes principales](#routes-principales)
 - [Diagnostic de stress](#diagnostic-de-stress)
 - [Tests](#tests)
@@ -31,6 +32,7 @@ Le projet propose aussi une interface d'administration pour gérer les utilisate
 ### Côté visiteur
 
 - Consultation de pages d'information sur le stress et la prévention.
+- Installation de l'application sur mobile ou ordinateur grâce au mode PWA.
 - Inscription et connexion sécurisées.
 - Réinitialisation de mot de passe par jeton temporaire.
 - Questionnaire de diagnostic accessible sans compte.
@@ -264,6 +266,17 @@ Tables principales :
 Le modèle logique détaillé est disponible dans [`docs/mld.md`](docs/mld.md).
 
 Avec Docker, ces mêmes tables sont créées dans le conteneur MariaDB `cesizen_db`, dans la base `cesizen`. Les données sont persistées dans le volume Docker `cesizen_db_data`.
+
+## PWA
+
+CesiZen inclut une configuration Progressive Web App :
+
+- manifest web dans [`public/manifest.webmanifest`](public/manifest.webmanifest) ;
+- service worker dans [`public/service-worker.js`](public/service-worker.js) ;
+- page hors ligne dans [`public/offline.html`](public/offline.html) ;
+- icône applicative dans [`public/assets/icons/icon.svg`](public/assets/icons/icon.svg).
+
+Le service worker met en cache les assets publics et la page hors ligne. Les pages personnelles et les formulaires restent chargés depuis le réseau afin d'éviter de conserver des données sensibles dans le cache du navigateur.
 
 ## Routes principales
 

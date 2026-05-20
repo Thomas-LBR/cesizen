@@ -1,6 +1,12 @@
 # Disable directory browsing
 Options -Indexes
 
+<IfModule mod_mime.c>
+	AddType application/manifest+json .webmanifest
+	AddType application/javascript .js
+	AddType image/svg+xml .svg
+</IfModule>
+
 # ----------------------------------------------------------------------
 # Rewrite engine
 # ----------------------------------------------------------------------

@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1f7a68">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="CESIZen">
     <title><?= esc($title ?? 'CESIZen') ?></title>
+    <link rel="manifest" href="<?= base_url('manifest.webmanifest') ?>">
+    <link rel="icon" href="<?= base_url('favicon.ico') ?>">
+    <link rel="apple-touch-icon" href="<?= base_url('assets/icons/icon.svg') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
 </head>
 <body>
@@ -46,5 +53,12 @@
         CESIZen accompagne l’auto-évaluation du stress. L’application ne remplace pas un avis médical.
     </div>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('<?= base_url('service-worker.js') ?>');
+    });
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+{
+  "name": "CESIZen",
+  "short_name": "CESIZen",
+  "description": "Application de sensibilisation au stress et de diagnostic inspire de l'echelle de Holmes et Rahe.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f8f7",
+  "theme_color": "#1f7a68",
+  "orientation": "portrait",
+  "lang": "fr",
+  "categories": ["health", "education", "lifestyle"],
+  "icons": [
+    {
+      "src": "/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}
