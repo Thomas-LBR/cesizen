@@ -315,13 +315,28 @@ Les résultats sont affichés immédiatement. Ils sont aussi enregistrés dans l
 
 ## Tests
 
-Le projet contient des tests unitaires, notamment sur le service de calcul du diagnostic.
+Le projet contient une suite PHPUnit couvrant des tests unitaires, fonctionnels et de non-régression.
 
 ```bash
 vendor/bin/phpunit
 ```
 
-Un cahier de tests synthétique est aussi disponible dans [`docs/cahier-tests.md`](docs/cahier-tests.md).
+Avec Docker :
+
+```bash
+docker compose exec app vendor/bin/phpunit
+```
+
+Couverture principale :
+
+- calcul du diagnostic de stress ;
+- configuration administrable des résultats ;
+- accès connexion, compte et administration ;
+- questionnaire diagnostic et historique ;
+- pages d'information publiées ;
+- garde-fous PWA et mobile.
+
+Un cahier de tests complet est disponible dans [`docs/cahier-tests.md`](docs/cahier-tests.md).
 
 ## Documentation
 

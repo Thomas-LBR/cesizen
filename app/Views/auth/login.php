@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 <h1>Connexion</h1>
-<form class="panel form" method="post">
+<form class="panel form" method="post" action="<?= site_url('connexion') ?>">
     <?= csrf_field() ?>
     <div class="field">
         <label for="email">Email</label>
