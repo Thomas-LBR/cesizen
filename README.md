@@ -53,6 +53,7 @@ Le projet propose aussi une interface d'administration pour gérer les utilisate
 - Gestion des utilisateurs : rôle, activation, désactivation et suppression.
 - Gestion des pages éditoriales : création, modification, publication, brouillon et suppression.
 - Gestion du questionnaire : ajout, modification, activation et désactivation des événements.
+- Configuration de la page de résultat : seuils, libellés et messages affichés après calcul.
 
 > CesiZen est un outil d'auto-évaluation et de sensibilisation. Il ne remplace pas un avis médical ou l'accompagnement d'un professionnel de santé.
 
@@ -262,6 +263,7 @@ Tables principales :
 | `pages` | Pages d'information publiables côté public |
 | `diagnostic_events` | Événements stressants et points associés |
 | `diagnostic_results` | Résultats sauvegardés des utilisateurs connectés |
+| `diagnostic_result_configs` | Seuils, niveaux et messages de la page de résultat |
 
 Le modèle logique détaillé est disponible dans [`docs/mld.md`](docs/mld.md).
 
@@ -297,6 +299,7 @@ Le service worker met en cache les assets publics et la page hors ligne. Les pag
 | `GET` | `/admin/utilisateurs` | Gestion des utilisateurs |
 | `GET` | `/admin/pages` | Gestion des pages |
 | `GET` | `/admin/diagnostic` | Gestion des événements du questionnaire |
+| `GET`, `POST` | `/admin/diagnostic/resultats` | Configuration de la page de résultat |
 
 ## Diagnostic de stress
 

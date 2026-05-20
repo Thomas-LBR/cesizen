@@ -4,7 +4,7 @@ namespace App\Services\Diagnostic;
 
 class HolmesRaheDiagnosticService
 {
-    public function calculate(array $events): DiagnosticResult
+    public function calculate(array $events, ?array $resultConfigs = null): DiagnosticResult
     {
         $score = 0;
 
@@ -12,32 +12,52 @@ class HolmesRaheDiagnosticService
             $score += (int) ($event['points'] ?? 0);
         }
 
-        return new DiagnosticResult($score, $this->level($score), $this->message($score));
+        $config = $this->matchingConfig($score, $resultConfigs ?? $this->defaultConfigs());
+
+        return new DiagnosticResult($score, $config['level'], $config['message']);
     }
 
-    private function level(int $score): string
+    private function matchingConfig(int $score, array $configs): array
     {
-        if ($score < 150) {
-            return 'Stress faible';
+        foreach ($configs as $config) {
+            $min = (int) ($config['min_score'] ?? 0);
+            $max = $config['max_score'] ?? null;
+
+            if ($score >= $min && ($max === null || $max === '' || $score <= (int) $max)) {
+                return [
+                    'level' => (string) $config['level'],
+                    'message' => (string) $config['message'],
+                ];
+            }
         }
 
-        if ($score < 300) {
-            return 'Stress modéré';
-        }
-
-        return 'Stress élevé';
+        return [
+            'level' => 'Résultat indisponible',
+            'message' => 'Aucune configuration ne correspond à ce score. Veuillez contacter un administrateur.',
+        ];
     }
 
-    private function message(int $score): string
+    private function defaultConfigs(): array
     {
-        if ($score < 150) {
-            return 'Votre score indique une exposition limitée aux événements stressants. Continuez à préserver vos temps de repos et vos habitudes protectrices.';
-        }
-
-        if ($score < 300) {
-            return 'Votre score indique une exposition notable au stress. Il peut être utile d’identifier les sources principales et de mettre en place des pauses régulières.';
-        }
-
-        return 'Votre score indique une exposition forte au stress. Ce résultat n’est pas un diagnostic médical, mais il peut justifier d’en parler à un professionnel de santé.';
+        return [
+            [
+                'level' => 'Stress faible',
+                'min_score' => 0,
+                'max_score' => 149,
+                'message' => 'Votre score indique une exposition limitée aux événements stressants. Continuez à préserver vos temps de repos et vos habitudes protectrices.',
+            ],
+            [
+                'level' => 'Stress modéré',
+                'min_score' => 150,
+                'max_score' => 299,
+                'message' => 'Votre score indique une exposition notable au stress. Il peut être utile d’identifier les sources principales et de mettre en place des pauses régulières.',
+            ],
+            [
+                'level' => 'Stress élevé',
+                'min_score' => 300,
+                'max_score' => null,
+                'message' => 'Votre score indique une exposition forte au stress. Ce résultat n’est pas un diagnostic médical, mais il peut justifier d’en parler à un professionnel de santé.',
+            ],
+        ];
     }
 }

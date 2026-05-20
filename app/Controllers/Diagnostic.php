@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DiagnosticEventModel;
+use App\Models\DiagnosticResultConfigModel;
 use App\Models\DiagnosticResultModel;
 use App\Services\Diagnostic\HolmesRaheDiagnosticService;
 
@@ -21,7 +22,8 @@ class Diagnostic extends BaseController
         $ids = array_map('intval', (array) $this->request->getPost('events'));
         $eventModel = new DiagnosticEventModel();
         $events = $ids ? $eventModel->whereIn('id', $ids)->where('is_active', 1)->findAll() : [];
-        $result = (new HolmesRaheDiagnosticService())->calculate($events);
+        $resultConfigs = (new DiagnosticResultConfigModel())->ordered();
+        $result = (new HolmesRaheDiagnosticService())->calculate($events, $resultConfigs);
 
         if (session()->get('user_id')) {
             (new DiagnosticResultModel())->insert([

@@ -45,4 +45,14 @@ DIAGNOSTIC_RESULTS(
   created_at,
   updated_at
 )
+
+DIAGNOSTIC_RESULT_CONFIGS(
+  id PK,
+  level,
+  min_score,
+  max_score,
+  message,
+  created_at,
+  updated_at
+)
 ```

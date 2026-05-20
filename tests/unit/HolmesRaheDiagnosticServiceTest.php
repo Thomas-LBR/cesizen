@@ -41,4 +41,25 @@ class HolmesRaheDiagnosticServiceTest extends CIUnitTestCase
         $this->assertSame(301, $result->score);
         $this->assertSame('Stress élevé', $result->level);
     }
+    public function testItUsesCustomResultConfiguration(): void
+    {
+        $result = (new HolmesRaheDiagnosticService())->calculate(
+            [
+                ['points' => 60],
+                ['points' => 50],
+            ],
+            [
+                [
+                    'level' => 'Niveau custom',
+                    'min_score' => 0,
+                    'max_score' => 120,
+                    'message' => 'Message administrable.',
+                ],
+            ]
+        );
+
+        $this->assertSame(110, $result->score);
+        $this->assertSame('Niveau custom', $result->level);
+        $this->assertSame('Message administrable.', $result->message);
+    }
 }
