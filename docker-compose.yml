@@ -7,6 +7,10 @@ services:
     restart: unless-stopped
     ports:
       - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - cesizen_vendor:/var/www/html/vendor
+      - cesizen_writable:/var/www/html/writable
     environment:
       - CI_ENVIRONMENT=development
       - app.baseURL=http://localhost:8080/
@@ -60,3 +64,5 @@ services:
 
 volumes:
   cesizen_db_data:
+  cesizen_vendor:
+  cesizen_writable:
