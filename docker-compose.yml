@@ -1,0 +1,62 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cesizen_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - CI_ENVIRONMENT=development
+      - app.baseURL=http://localhost:8080/
+      - app.forceGlobalSecureRequests=false
+      - database.default.hostname=db
+      - database.default.database=cesizen
+      - database.default.username=cesizen
+      - database.default.password=cesizen
+      - database.default.DBDriver=MySQLi
+      - database.default.DBPrefix=
+      - database.default.port=3306
+      - encryption.key=4b337d341fbe0b0f9a74cbabcc43d7fe
+      - logger.threshold=4
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11.4
+    container_name: cesizen_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_DATABASE: cesizen
+      MARIADB_USER: cesizen
+      MARIADB_PASSWORD: cesizen
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - cesizen_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: cesizen_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: cesizen
+      PMA_PASSWORD: cesizen
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  cesizen_db_data:
