@@ -9,6 +9,7 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html
+      - ./docker/app.env:/var/www/html/.env:ro
       - cesizen_vendor:/var/www/html/vendor
       - cesizen_writable:/var/www/html/writable
     environment:
