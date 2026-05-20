@@ -1,69 +1,252 @@
-# CodeIgniter 4 Application Starter
+# CesiZen
 
-## What is CodeIgniter?
+![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.7-EF4223?style=for-the-badge&logo=codeigniter&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![PHPUnit](https://img.shields.io/badge/PHPUnit-10.5-366488?style=for-the-badge)
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+**CesiZen** est une application web de sensibilisation au stress développée avec **CodeIgniter 4**. Elle permet aux visiteurs de consulter des contenus de prévention, de réaliser un diagnostic de stress inspiré de l'échelle de Holmes et Rahe, puis aux utilisateurs connectés de conserver l'historique de leurs résultats.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Le projet propose aussi une interface d'administration pour gérer les utilisateurs, les pages d'information et les événements utilisés dans le questionnaire.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Sommaire
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- [Fonctionnalités](#fonctionnalités)
+- [Aperçu technique](#aperçu-technique)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Comptes de démonstration](#comptes-de-démonstration)
+- [Commandes utiles](#commandes-utiles)
+- [Structure du projet](#structure-du-projet)
+- [Base de données](#base-de-données)
+- [Routes principales](#routes-principales)
+- [Diagnostic de stress](#diagnostic-de-stress)
+- [Tests](#tests)
+- [Documentation](#documentation)
+- [Licence](#licence)
 
-## Installation & updates
+## Fonctionnalités
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### Côté visiteur
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- Consultation de pages d'information sur le stress et la prévention.
+- Inscription et connexion sécurisées.
+- Réinitialisation de mot de passe par jeton temporaire.
+- Questionnaire de diagnostic accessible sans compte.
+- Calcul d'un score de stress avec un niveau lisible :
+  - `Stress faible`
+  - `Stress modéré`
+  - `Stress élevé`
 
-## Setup
+### Côté utilisateur connecté
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+- Sauvegarde automatique des résultats de diagnostic.
+- Consultation de l'historique personnel.
+- Gestion du profil depuis l'espace compte.
 
-## Important Change with index.php
+### Côté administrateur
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- Tableau de bord avec indicateurs clés.
+- Gestion des utilisateurs : rôle, activation, désactivation et suppression.
+- Gestion des pages éditoriales : création, modification, publication, brouillon et suppression.
+- Gestion du questionnaire : ajout, modification, activation et désactivation des événements.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+> CesiZen est un outil d'auto-évaluation et de sensibilisation. Il ne remplace pas un avis médical ou l'accompagnement d'un professionnel de santé.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## Aperçu technique
 
-## Repository Management
+| Élément | Technologie |
+| --- | --- |
+| Framework | CodeIgniter 4.7 |
+| Langage | PHP 8.2+ |
+| Base de données | SQLite |
+| Tests | PHPUnit 10.5 |
+| Architecture | MVC CodeIgniter |
+| Authentification | Sessions PHP, mots de passe hachés |
+| Styles | CSS applicatif dans `public/assets/css/app.css` |
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Prérequis
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Avant de lancer le projet, installez :
 
-## Server Requirements
+- PHP `8.2` ou supérieur ;
+- Composer ;
+- l'extension PHP `sqlite3` ;
+- l'extension PHP `intl` ;
+- l'extension PHP `mbstring`.
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+Avec XAMPP, l'extension SQLite peut être chargée ponctuellement avec l'option `-d extension=sqlite3`.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Installation
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+Clonez le dépôt, installez les dépendances, préparez la base de données puis lancez le serveur local.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+```bash
+git clone <url-du-depot>
+cd cesizen
+composer install
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+Copiez le fichier d'environnement si nécessaire :
+
+```bash
+cp env .env
+```
+
+Lancez les migrations :
+
+```bash
+php -d extension=sqlite3 spark migrate
+```
+
+Ajoutez les données de démonstration :
+
+```bash
+php -d extension=sqlite3 spark db:seed InitialSeeder
+```
+
+Démarrez le serveur local :
+
+```bash
+php -d extension=sqlite3 -S localhost:8080 -t public vendor/codeigniter4/framework/system/rewrite.php
+```
+
+L'application est ensuite disponible à l'adresse :
+
+```text
+http://localhost:8080
+```
+
+Si l'extension `sqlite3` est activée directement dans `php.ini`, vous pouvez aussi utiliser la commande CodeIgniter classique :
+
+```bash
+php spark serve
+```
+
+## Comptes de démonstration
+
+Après exécution du seeder, deux comptes sont disponibles.
+
+| Rôle | Email | Mot de passe |
+| --- | --- | --- |
+| Administrateur | `admin@cesizen.test` | `Admin123!` |
+| Utilisateur | `user@cesizen.test` | `User123!` |
+
+## Commandes utiles
+
+```bash
+# Installer les dépendances PHP
+composer install
+
+# Exécuter les migrations
+php -d extension=sqlite3 spark migrate
+
+# Charger les données de démonstration
+php -d extension=sqlite3 spark db:seed InitialSeeder
+
+# Lancer le serveur de développement avec SQLite chargé ponctuellement
+php -d extension=sqlite3 -S localhost:8080 -t public vendor/codeigniter4/framework/system/rewrite.php
+
+# Lancer les tests
+vendor/bin/phpunit
+```
+
+## Structure du projet
+
+```text
+cesizen/
+├── app/
+│   ├── Config/              # Configuration CodeIgniter
+│   ├── Controllers/         # Contrôleurs publics, compte, auth et admin
+│   ├── Database/
+│   │   ├── Migrations/      # Création des tables
+│   │   └── Seeds/           # Données de démonstration
+│   ├── Models/              # Modèles de données
+│   ├── Services/Diagnostic/ # Calcul du diagnostic de stress
+│   └── Views/               # Vues PHP
+├── docs/                    # Documentation fonctionnelle et technique
+├── public/                  # Point d'entrée web et assets publics
+├── tests/                   # Tests automatisés
+├── writable/                # Cache, logs, sessions et base SQLite
+├── composer.json
+└── README.md
+```
+
+## Base de données
+
+Le prototype utilise SQLite afin de simplifier l'installation et la démonstration. Le fichier de base de données est stocké ici :
+
+```text
+writable/database/cesizen.sqlite
+```
+
+Tables principales :
+
+| Table | Rôle |
+| --- | --- |
+| `users` | Comptes utilisateurs, rôles, statut, jetons de réinitialisation |
+| `pages` | Pages d'information publiables côté public |
+| `diagnostic_events` | Événements stressants et points associés |
+| `diagnostic_results` | Résultats sauvegardés des utilisateurs connectés |
+
+Le modèle logique détaillé est disponible dans [`docs/mld.md`](docs/mld.md).
+
+## Routes principales
+
+| Méthode | Route | Description |
+| --- | --- | --- |
+| `GET` | `/` | Page d'accueil |
+| `GET` | `/page/{slug}` | Consultation d'une page d'information |
+| `GET`, `POST` | `/inscription` | Création de compte |
+| `GET`, `POST` | `/connexion` | Connexion |
+| `GET` | `/deconnexion` | Déconnexion |
+| `GET`, `POST` | `/mot-de-passe-oublie` | Demande de réinitialisation |
+| `GET`, `POST` | `/reinitialiser-mot-de-passe` | Nouveau mot de passe |
+| `GET` | `/diagnostic` | Questionnaire de diagnostic |
+| `POST` | `/diagnostic/calculer` | Calcul du résultat |
+| `GET` | `/diagnostic/resultats` | Historique utilisateur connecté |
+| `GET`, `POST` | `/compte` | Profil utilisateur |
+| `GET` | `/admin` | Tableau de bord administrateur |
+| `GET` | `/admin/utilisateurs` | Gestion des utilisateurs |
+| `GET` | `/admin/pages` | Gestion des pages |
+| `GET` | `/admin/diagnostic` | Gestion des événements du questionnaire |
+
+## Diagnostic de stress
+
+Le diagnostic repose sur une liste d'événements auxquels sont associés des points. Le service `HolmesRaheDiagnosticService` additionne les points sélectionnés puis attribue un niveau :
+
+| Score | Niveau |
+| --- | --- |
+| Moins de `150` | Stress faible |
+| De `150` à `299` | Stress modéré |
+| `300` et plus | Stress élevé |
+
+Les résultats sont affichés immédiatement. Ils sont aussi enregistrés dans l'historique lorsque l'utilisateur est connecté.
+
+## Tests
+
+Le projet contient des tests unitaires, notamment sur le service de calcul du diagnostic.
+
+```bash
+vendor/bin/phpunit
+```
+
+Un cahier de tests synthétique est aussi disponible dans [`docs/cahier-tests.md`](docs/cahier-tests.md).
+
+## Documentation
+
+- [`docs/installation.md`](docs/installation.md) : guide d'installation rapide ;
+- [`docs/mld.md`](docs/mld.md) : modèle logique de données ;
+- [`docs/cahier-tests.md`](docs/cahier-tests.md) : scénarios de test fonctionnels.
+
+## Sécurité et bonnes pratiques
+
+- Les mots de passe sont stockés avec `password_hash`.
+- Les sessions sont régénérées à la connexion.
+- Les accès utilisateur et administrateur sont protégés par filtres.
+- Le dossier public du serveur doit pointer vers `public/`.
+- La base SQLite, les logs et les sessions restent dans `writable/`.
+
+## Licence
+
+Ce projet est basé sur CodeIgniter 4 et conserve une licence MIT. Consultez le fichier [`LICENSE`](LICENSE) pour plus d'informations.
